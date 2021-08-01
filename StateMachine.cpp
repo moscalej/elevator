@@ -8,42 +8,41 @@ int run_state_machine(ElevatorClass *elevator, GlobalState *globalState) {
     int door;
     int command;
 
-    switch (globalState->get_state()) {
+    switch (globalState->leer_stado()) {
         case BRING_UP:
             elevator->bring_up();
-            globalState->update_state(STAND_BY_CLOSE_DOOR);
+            globalState->proximo_stado(STAND_BY_CLOSE_DOOR);
             break;
 
         case RESET:
             elevator->reset();
-            globalState->update_state(BRING_UP);
+            globalState->proximo_stado(BRING_UP);
             break;
 
         case STAND_BY_CLOSE_DOOR:
             door = elevator->get_door_status();
             command = elevator->get_command();
             if (door == OPEN) {
-                globalState->update_state(STAND_BY_OPEN_DOOR);
+                globalState->proximo_stado(NO_HAGAS_NADA_PUERTA_ABIERTA);
             } else {
                 if (command != NO_COMMAND) {
-                    globalState->update_state(EXECUTING_COMMAND);
+                    globalState->proximo_stado(EXECUTING_COMMAND);
 
                 }
             }
-
             break;
-        case STAND_BY_OPEN_DOOR:
+
+        case NO_HAGAS_NADA_PUERTA_ABIERTA:
             command = elevator->get_command();
             if (elevator->get_door_status() == CLOSE) {
-                globalState->update_state(STAND_BY_CLOSE_DOOR);
+                globalState->proximo_stado(STAND_BY_CLOSE_DOOR);
 
             }
             break;
 
         case EXECUTING_COMMAND:
-            globalState->update_state(MOVING);
             elevator->run_command();
-            globalState->update_state(STAND_BY_CLOSE_DOOR);
+            globalState->proximo_stado(STAND_BY_CLOSE_DOOR);
             break;
 
     }

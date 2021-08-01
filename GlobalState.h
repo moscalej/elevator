@@ -6,26 +6,27 @@
 #define UNTITLED4_GLOBALSTATE_H
 
 
-enum States{
+enum States {
     BRING_UP = 0,
-    RESET= 1,
-    STAND_BY_CLOSE_DOOR,
-    STAND_BY_OPEN_DOOR,
-    FETCHING_COMMAND,
-    EXECUTING_COMMAND,
-    MOVING,
-    };
+    RESET = 1,
+    STAND_BY_CLOSE_DOOR = 2,
+    NO_HAGAS_NADA_PUERTA_ABIERTA = 3,
+    EXECUTING_COMMAND = 4,
+    MOVING = 5,
+};
 
 
-class GlobalState{
+class GlobalState {
 public:
-    int  current_state = BRING_UP;
+    int firmware_version = 0;
+    int current_state = BRING_UP;
     int last_state = RESET;
-    bool fatalError;
+    bool fatalError = false;
     int errors;
 
-    int update_state(int states);
-    int get_state() const;
+    int proximo_stado(int states);
+
+    int leer_stado() const;
 };
 
 #endif //UNTITLED4_GLOBALSTATE_H

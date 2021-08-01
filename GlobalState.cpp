@@ -4,12 +4,12 @@
 
 #include "GlobalState.h"
 
-int GlobalState::update_state(int state) {
+int GlobalState::proximo_stado(int state) {
     this->current_state = state;
     return 0;
 
 }
 
-int GlobalState::get_state() const {
+int GlobalState::leer_stado() const {
     return this->current_state;
 }

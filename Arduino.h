@@ -5,16 +5,23 @@
 #ifndef UNTITLED4_ARDUINO_H
 #define UNTITLED4_ARDUINO_H
 
+typedef struct {
+    int command = 0;
+    int arguments = 0;
+} Command;
+
 
 class Arduino {
 public:
     int get_door_status();
 
-    int check_botons();
+    Command check_buttons();
 
     int move_to_floor(int from_floor, int to_floor);
 
     int get_errors();
+
+    int bring_up();
 };
 
 
